@@ -3,13 +3,14 @@ from collections import deque, namedtuple
 
 row = list[str]
 grid = list[row]
+Point = namedtuple("Point", ["y", "x"])
 
-def __generate_starting_queue() -> deque:
-    mainQueue = deque()
+def __generate_starting_queue(first_letter: str, board: grid) -> deque:
+    mainQueue: deque[Point] = deque()
     for y,array in enumerate(board):
         for x,letter in enumerate(array):
-            if letter == word[:1]:
-                deque.appendleft((x,y))
+            if letter == first_letter:
+                mainQueue.appendleft(Point(y,x))
     return mainQueue
 
 def exists(board: grid, word: str) -> bool:
@@ -18,4 +19,6 @@ def exists(board: grid, word: str) -> bool:
     and then tell me if there is a path through it that spells out
     the word desired
     """
-    mainQueue = __generate_starting_queue()
+    word_array = word.split("")
+    mainQueue = __generate_starting_queue(word_array[0], board)
+    return False
